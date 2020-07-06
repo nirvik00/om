@@ -1,12 +1,36 @@
+<!DOCTYPE html>
+<html>
+<title>photo-gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {
+        display: none;
+    }
+
+    #holder {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    #holder img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<body>
 
     <h2 class="w3-center">Manual Slideshow</h2>
 
     <div class="w3-content w3-display-container">
         <div id="holder">
-            <img class="mySlides" src="/public/imgs/img2.jpg" style="width:50%">
-            <img class="mySlides" src="/public/imgs/img3.jpg" style="width:50%">
-            <img class="mySlides" src="/public/imgs/img4.jpg" style="width:50%">
-            <img class="mySlides" src="/public/imgs/img5.jpg" style="width:50%">
+            <img class="mySlides" src="img2.jpg" style="width:50%">
+            <img class="mySlides" src="img3.jpg" style="width:50%">
+            <img class="mySlides" src="img4.jpg" style="width:50%">
+            <img class="mySlides" src="img5.jpg" style="width:50%">
         </div>
         <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
         <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
@@ -31,3 +55,7 @@
             x[slideIndex - 1].style.display = "block";
         }
     </script>
+
+</body>
+
+</html>

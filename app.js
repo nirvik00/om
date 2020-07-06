@@ -14,15 +14,22 @@ app.use('/public', express.static(process.env.PWD + '/public'));
 app.engine('handlebars', exhbs({
     defaultLayout: 'main'
 }));
+
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
     res.render('index');
 });
 
+
+app.get('/live', function (req, res) {
+    res.render('liveVid');
+}); 
+
 app.get('/about', function (req, res) {
     res.render('about');
-});
+}); 
+
 
 
 var port = process.env.PORT || 5000;
