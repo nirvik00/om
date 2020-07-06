@@ -30,7 +30,9 @@ app.get('/about', function (req, res) {
     res.render('about');
 }); 
 
-
+app.get('/gallery', function (req, res) {
+    res.render('gallery');
+}); 
 
 var port = process.env.PORT || 5000;
 app.listen(port, () => {
