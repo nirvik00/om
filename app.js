@@ -1,26 +1,31 @@
 var express = require("express");
-var exhbs= require('express-handlebars');
+var exhbs = require('express-handlebars');
 
 
 var app = new express();
 
 
-app.use(express.static(__dirname + "/public" ));
+process.env.PWD = process.cwd()
+app.use('/public', express.static(process.env.PWD + '/public'));
 
 
 //load middleware
 //express-handlebars : views
 app.engine('handlebars', exhbs({
-    defaultLayout:'main'
+    defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
 
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
     res.render('index');
+});
+
+app.get('/about', function (req, res) {
+    res.render('about');
 });
 
 
 var port = process.env.PORT || 5000;
-app.listen(port,()=>{
-    console.log("Server running at port "+ port);
+app.listen(port, () => {
+    console.log("Server running at port " + port);
 });
