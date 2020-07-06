@@ -1,26 +1,26 @@
 var express = require("express");
+var exhbs= require('express-handlebars');
+
+
 var app = new express();
-var http = require("http").Server(app);
-var io = require("socket.io")(http);
 
-
-var port = process.env.PORT || 5000;
 
 app.use(express.static(__dirname + "/public" ));
 
+
+//load middleware
+//express-handlebars : views
+app.engine('handlebars', exhbs({
+    defaultLayout:'main'
+}));
+app.set('view engine', 'handlebars');
+
 app.get('/',function(req,res){
-res.redirect('index.html');
+    res.render('index');
 });
 
 
-io.on('connection',function(socket){
-
-    socket.on('stream',function(image){
-        socket.broadcast.emit('stream',image);  
-    });
-
-});
-
-http.listen(port,function(){
-console.log("Server running at port "+ port);
+var port = process.env.PORT || 5000;
+app.listen(port,()=>{
+    console.log("Server running at port "+ port);
 });
