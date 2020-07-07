@@ -43,7 +43,7 @@ function addButtons(ele) {
     //add and handle end button
     let endbtn = document.createElement("BUTTON");
     endbtn.className = "closeme";
-    endbtn.innerHTML = "CLOSE USER INTERFACE";
+    endbtn.innerHTML = "CLOSE";
     endbtn.style.marginTop = "12px";
     endbtn.style.marginLeft = "20px";
 
