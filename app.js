@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 
 app.get('/live', function (req, res) {
     res.render('liveVid');
-}); 
+});  
 
 /* 
 app.get('/about', function (req, res) {
