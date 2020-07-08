@@ -1,3 +1,6 @@
+
+
+
 var express = require("express");
 var exhbs = require('express-handlebars');
 
@@ -11,6 +14,7 @@ app.use('/public', express.static(process.env.PWD + '/public'));
 
 //load middleware
 //express-handlebars : views
+
 app.engine('handlebars', exhbs({
     defaultLayout: 'main'
 }));
@@ -31,6 +35,7 @@ app.get('/about', function (req, res) {
     res.render('about');
 }); 
  */
+
 app.get('/gallery', function (req, res) {
     res.render('gallery');
 }); 
