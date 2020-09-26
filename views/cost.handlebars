@@ -1,0 +1,219 @@
+<link rel="stylesheet" href="/public/css/money.css">
+<br>
+<br>
+<br>
+<p id="sys"> System message</p>
+<br>
+<br>
+
+<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showExistingEntries()">toggle Show / Hide DB
+    Entries</button>
+
+<div id="EntriesDiv">
+    <table id="tableId">
+        <tr>
+            <th>
+                <p>Sl</p>
+            </th>
+            <th>
+                <p>Purpose</p>
+            </th>
+            <th>
+                <p>Source</p>
+            </th>
+            <th>
+                <p>Name</p>
+            </th>
+            <th>
+                <p>Value</p>
+            </th>
+            <th>
+                <p>Income</p>
+            </th>
+            <th>
+                <p>Gift</p>
+            </th>
+            <th>
+                <p>Expense</p>
+            </th>
+            <th>
+                <p>Debt</p>
+            </th>
+            <th>
+                <p>Date</p>
+            </th>
+            <th>
+                <p>Delete</p>
+            </th>
+        </tr>
+    </table>
+</div>
+
+<br>
+<br>
+<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showAddForm();">toggle Show / Hide Entry
+</button>
+
+
+<div id="AddDiv">
+    <form action="/finance/add" method="post">
+        <br>
+        <table id="AddEntryTable">
+            <tr>
+                <td>Purpose</td>
+                <td>
+                    <input class='showInp' name='purpose' type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>Source</td>
+                <td>
+                    <input class='showInp' name='source' type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input class='showInp' name='name' type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>Value</td>
+                <td>
+                    <input class='showInp' name='val' type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>Income</td>
+                <td style="text-align:center">
+                    <input class='showInp' name='income' type="checkbox" checked />
+                </td>
+            </tr>
+            <tr>
+                <td>Gift</td>
+                <td style="text-align:center">
+                    <input class='showInp' name='gift' type="checkbox" />
+                </td>
+            </tr>
+            <tr>
+                <td>Expense</td>
+                <td style="text-align:center">
+                    <input class='showInp' name='expense' type="checkbox" />
+                </td>
+            </tr>
+            <tr>
+                <td>Debt</td>
+                <td style="text-align:center">
+                    <input class='showInp' name='debt' type="checkbox" />
+                </td>
+            </tr>
+            <tr>
+                <td>Add Entry</td>
+                <td>
+                    <button class="btn btn-standard" style="font-size:15px; width:100%">Submit to DB</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+
+
+<script>
+    let showEntriesDiv = false;
+    let showAddDiv = false;
+    console.clear();
+
+    window.onload = function () {
+        document.getElementById("EntriesDiv").style.display = 'none';
+        document.getElementById("AddDiv").style.display = 'none';
+    }
+
+    function showExistingEntries() {
+        showEntriesDiv = !showEntriesDiv;
+        if (showEntriesDiv) {
+            if (jsonData.length > 0) {
+                document.getElementById("EntriesDiv").style.display = 'block';
+            } else {
+                document.getElementById("EntriesDiv").style.display = 'none';
+
+            }
+        } else {
+            document.getElementById("EntriesDiv").style.display = 'none';
+        }
+    }
+    function showAddForm() {
+        showAddDiv = !showAddDiv;
+        if (showAddDiv) {
+            document.getElementById("AddDiv").style.display = 'block';
+        } else {
+            document.getElementById("AddDiv").style.display = 'none';
+        }
+    }
+</script>
+
+
+<script>
+    let data = "{{{data}}}";
+    let decode = decodeURIComponent(data);
+    let jsonData = JSON.parse(decode);
+    console.log(jsonData);
+
+    if (jsonData.length > 0) {
+        makeTable(jsonData);
+        document.getElementById("sys").innerHTML = 'System message: DATA - ' + jsonData.length;
+    } else {
+        document.getElementById("sys").innerHTML = 'System message: NO DATA';
+    }
+
+    function makeTable(jsondata) {
+        let tbl = document.getElementById("tableId");
+        let rowId = 0;
+        jsondata.forEach(e => {
+            rowId++;
+            let tr = document.createElement('tr');
+            let td1 = document.createElement('td');
+            td1.innerHTML = rowId;
+            tr.appendChild(td1);
+            tr.class = "row" + rowId;
+            let date = new Date(e.date).toUTCString(); date.replace("GMT", "");
+            let dateObj = new Date(e.date);
+            let date2 = dateObj.toLocaleDateString('en-US');
+            let fields = [e.purpose, e.source, e.name, e.val, e.income, e.gift, e.expense, e.debt, date2];
+            fields.forEach(f => {
+                let td = document.createElement('td');
+                let input = document.createElement('input');
+                input.value = f;
+                td.appendChild(input);
+                tr.appendChild(td);
+            });
+            let btn = document.createElement("button");
+            btn.innerHTML = "X";
+            btn.className = "btn btn-danger";
+            btn.id = "delBtn";
+            btn.style.marginLeft = "12px";
+
+            let form = document.createElement('form');
+            form.method = "delete";
+            form.action = "/finance/{{e._id}}?_method=DELETE";
+            let inp = document.createElement('inpiut');
+            inp.name = "_method";
+            inp.value = 'DELETE';
+            form.appendChild(inp);
+            form.appendChild(btn);
+
+            let td2 = document.createElement('td');
+            td2.appendChild(form);
+            tr.appendChild(td2);
+            tbl.appendChild(tr);
+        });
+    }
+
+</script>
+
+<form method="post" action="/finance/{{id}}?_method=DELETE">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete">
+</form>

@@ -1,0 +1,36 @@
+#existingTableDiv {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tableId td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 10px;
+}
+
+/* #tableDiv tr:nth-child(even) {
+    background-color: #f2f2f2;
+} */
+
+#tableId tr:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+#tableId th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: center;
+    background-color: #cfcccc;
+    color: white;
+}
+
+input {
+    border: 1px solid rgb(240, 240, 240);
+    text-align: center;
+}
+
+#AddEntryTable td {
+    padding: 12px;
+}

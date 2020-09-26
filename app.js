@@ -1,46 +1,47 @@
+const express = require('express');
+const exhbs = require('express-handlebars');
+const methodOverride = require('method-override');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const app = new express();
 
+app.use(cors());
+require('dotenv').config();
 
-
-var express = require("express");
-var exhbs = require('express-handlebars');
-
-
-var app = new express();
-
-
-process.env.PWD = process.cwd()
+process.env.PWD = process.cwd();
 app.use('/public', express.static(process.env.PWD + '/public'));
 
-
-//load middleware
-//express-handlebars : views
-
-app.engine('handlebars', exhbs({
-    defaultLayout: 'main'
-}));
-
-app.set('view engine', 'handlebars');
-
-app.get('/', function (req, res) {
-    res.render('index');
+// db
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true,
 });
 
+//load middleware
 
-app.get('/live', function (req, res) {
-    res.render('liveVid');
-});  
+//express-handlebars : views
+app.engine(
+	'handlebars',
+	exhbs({
+		defaultLayout: 'main',
+	})
+);
+app.set('view engine', 'handlebars');
 
-/* 
-app.get('/about', function (req, res) {
-    res.render('about');
-}); 
- */
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/gallery', function (req, res) {
-    res.render('gallery');
-}); 
+//middleware for method-override
+app.use(methodOverride('_method'));
 
-var port = process.env.PORT || 5000;
+/// routes
+
+// wedding routes
+app.use('/', require('./routes/weddingRoute'));
+
+var port = process.env.PORT || 5500;
 app.listen(port, () => {
-    console.log("Server running at port " + port);
+	console.log('Server running at port ' + port);
 });
