@@ -6,8 +6,12 @@
 <br>
 <br>
 
-<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showExistingEntries()">toggle Show / Hide DB
-    Entries</button>
+<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showExistingEntries()">
+    <span style="font-size:10px">
+        (toggle show / hide)
+    </span> &nbsp; &nbsp;
+    List Database Entries
+</button>
 
 <div id="EntriesDiv">
     <table id="tableId">
@@ -51,7 +55,11 @@
 
 <br>
 <br>
-<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showAddForm();">toggle Show / Hide Entry
+<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="showAddForm();"> <span
+        style="font-size:10px">
+        (toggle show / hide)
+    </span> &nbsp; &nbsp;
+    Add Entry to Database
 </button>
 
 
@@ -118,17 +126,16 @@
 </div>
 
 
-
-
-
 <script>
-    let showEntriesDiv = false;
-    let showAddDiv = false;
+    let showEntriesDiv = true;
+    let showAddDiv = true;
     console.clear();
 
     window.onload = function () {
-        document.getElementById("EntriesDiv").style.display = 'none';
-        document.getElementById("AddDiv").style.display = 'none';
+        // document.getElementById("EntriesDiv").style.display = 'none';
+        showExistingEntries();
+        // document.getElementById("AddDiv").style.display = 'none';
+        showAddForm();
     }
 
     function showExistingEntries() {
@@ -189,31 +196,25 @@
                 td.appendChild(input);
                 tr.appendChild(td);
             });
+
             let btn = document.createElement("button");
             btn.innerHTML = "X";
             btn.className = "btn btn-danger";
             btn.id = "delBtn";
             btn.style.marginLeft = "12px";
-
-            let form = document.createElement('form');
-            form.method = "delete";
-            form.action = "/finance/{{e._id}}?_method=DELETE";
-            let inp = document.createElement('inpiut');
-            inp.name = "_method";
-            inp.value = 'DELETE';
-            form.appendChild(inp);
-            form.appendChild(btn);
-
+            btn.addEventListener('click', async function delObj(event) {
+                try {
+                    const obj = await fetch('/finance/' + e._id, { method: 'Delete' });
+                } catch (e) {
+                    console.log('did not go thru');
+                }
+                showEntriesDiv = false;
+                window.location.reload(true);
+            });
             let td2 = document.createElement('td');
-            td2.appendChild(form);
+            td2.appendChild(btn);
             tr.appendChild(td2);
             tbl.appendChild(tr);
         });
     }
-
 </script>
-
-<form method="post" action="/finance/{{id}}?_method=DELETE">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete">
-</form>
