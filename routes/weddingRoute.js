@@ -25,86 +25,36 @@ router.get('/finance', async (req, res) => {
 	try {
 		let money = await Money.find({});
 		let str = JSON.stringify(money);
-		// res.send(money);
 		res.render('cost', { data: encodeURIComponent(str) });
 	} catch (e) {
 		res.render('cost', { data: 'Error' });
 	}
 });
 
-/* 
-router.delete('/remove/:user_id', async (req, res) => {
-	try {
-		await User.findOneAndRemove({ _id: req.params.user_id });
-		res.status(200).json({ msg: 'Deleted user' });
-	} catch (err) {
-		res.status(400).json({ msg: 'Error in deleting user' });
-	}
-});
-*/
-
 router.post('/finance/add', async (req, res) => {
+	console.log(req.body);
 	const purpose = req.body.purpose;
 	const source = req.body.source;
 	const name = req.body.name;
 	const val = parseFloat(req.body.val);
-	let income, gift, expense, debt;
-	try {
-		income = req.body.income;
-		if (income === 'on') {
-			income = true;
-		} else {
-			income = false;
-		}
-	} catch (e) {
-		income = false;
-	}
-	try {
-		gift = req.body.gift;
-		if (gift === 'on') {
-			gift = true;
-		} else {
-			gift = false;
-		}
-	} catch (e) {
-		gift = false;
-	}
-	try {
-		expense = req.body.expense;
-		if (expense === 'on') {
-			expense = true;
-		} else {
-			expense = false;
-		}
-	} catch (e) {
-		expense = false;
-	}
-	try {
-		debt = req.body.debt;
-		if (debt === 'on') {
-			debt = true;
-		} else {
-			debt = false;
-		}
-	} catch (e) {
-		debt = false;
-	}
-
+	const moneyType = req.body.moneyType;
+	const incomeDate = req.body.incomeDate;
+	const spendDate = req.body.spendDate;
 	const newMoney = new Money({
 		purpose,
 		source,
 		name,
 		val,
-		income,
-		gift,
-		expense,
-		debt,
+		moneyType,
+		incomeDate,
+		spendDate,
 	});
 
 	try {
 		await newMoney.save();
 		res.status(200).redirect('/finance');
 	} catch (err) {
+		console.log('error in adding new data');
 		res.status(500).redirect('/finance');
 	}
 });
@@ -116,20 +66,9 @@ router.delete('/finance/:id', async (req, res) => {
 		await Money.findOneAndRemove({ _id: req.params.id });
 		res.redirect('/finance');
 	} catch (e) {
+		console.log('error in deleting data');
 		res.redirect('/finance');
 	}
-
-	/* Money.remove({ _id: req.params.id }).then(() => {
-		res.redirect('/finance');
-	}); */
-	/*
-	try {
-		await User.findOneAndRemove({ _id: req.params.user_id });
-		res.status(200).json({ msg: 'Deleted user' });
-	} catch (err) {
-		res.status(400).json({ msg: 'Error in deleting user' });
-	}
-	*/
 });
 
 module.exports = router;

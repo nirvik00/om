@@ -41,19 +41,16 @@
                 <p>Value</p>
             </th>
             <th>
-                <p>Income</p>
+                <p>Type</p>
             </th>
             <th>
-                <p>Gift</p>
+                <p>Income On</p>
             </th>
             <th>
-                <p>Expense</p>
+                <p>Spend On</p>
             </th>
             <th>
-                <p>Debt</p>
-            </th>
-            <th>
-                <p>Date</p>
+                <p>Entry Date</p>
             </th>
             <th>
                 <p>Delete</p>
@@ -101,27 +98,26 @@
                 </td>
             </tr>
             <tr>
-                <td>Income</td>
-                <td style="text-align:center">
-                    <input class='showInp' name='income' type="checkbox" checked />
+                <td>Type of Input</td>
+                <td>
+                    <select name="moneyType" id="selData" class="dropdown">
+                        <option value='income'>income (monthly recurring income) </option>
+                        <option value='gift'>gift (one-time income) </option>
+                        <option value='debt'>debt (monthly recurring expenditure) </option>
+                        <option value='expense'>expense (one-time expenditure) </option>
+                    </select>
                 </td>
             </tr>
             <tr>
-                <td>Gift</td>
-                <td style="text-align:center">
-                    <input class='showInp' name='gift' type="checkbox" />
+                <td>Income Date</td>
+                <td>
+                    <input type='date' name='incomeDate' />
                 </td>
             </tr>
             <tr>
-                <td>Expense</td>
-                <td style="text-align:center">
-                    <input class='showInp' name='expense' type="checkbox" />
-                </td>
-            </tr>
-            <tr>
-                <td>Debt</td>
-                <td style="text-align:center">
-                    <input class='showInp' name='debt' type="checkbox" />
+                <td>Expenditure Date</td>
+                <td>
+                    <input type='date' name='spendDate' />
                 </td>
             </tr>
             <tr>

@@ -19,25 +19,22 @@ const moneySchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	income: {
-		type: Boolean,
-		default: true,
-	},
-	gift: {
-		type: Boolean,
-		default: false,
-	},
-	expense: {
-		type: Boolean,
-		default: false,
-	},
-	debt: {
-		type: Boolean,
-		default: false,
+	moneyType: {
+		type: String,
+		enum: ['income', 'gift', 'expense', 'debt'],
+		default: 'income',
 	},
 	date: {
 		type: Date,
 		default: Date.now,
+	},
+	incomeDate: {
+		type: Date,
+		default: Date.now,
+	},
+	spendDate: {
+		type: Date,
+		defalut: Date.now,
 	},
 });
 

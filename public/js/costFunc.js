@@ -50,21 +50,9 @@ function makeTable(jsondata) {
 		td1.innerHTML = rowId;
 		tr.appendChild(td1);
 		tr.class = 'row' + rowId;
-		let date = new Date(e.date).toUTCString();
-		date.replace('GMT', '');
-		let dateObj = new Date(e.date);
-		let date2 = dateObj.toLocaleDateString('en-US');
-		let fields = [
-			e.purpose,
-			e.source,
-			e.name,
-			e.val,
-			e.income,
-			e.gift,
-			e.expense,
-			e.debt,
-			date2,
-		];
+
+		let fields = [e.purpose, e.source, e.name, e.val, e.moneyType];
+
 		fields.forEach((f) => {
 			let td = document.createElement('td');
 			let input = document.createElement('input');
@@ -73,14 +61,25 @@ function makeTable(jsondata) {
 			tr.appendChild(td);
 		});
 
+		//handle date
+		let tdEntryDate = addDateToEntryList(e.date);
+		tr.appendChild(tdEntryDate);
+
+		let tdIncDate = addDateToEntryList(e.incomeDate);
+		tr.appendChild(tdIncDate);
+
+		let tdExpDate = addDateToEntryList(e.spendDate);
+		tr.appendChild(tdExpDate);
+
+		// delete funcionality
 		let btn = document.createElement('button');
 		btn.innerHTML = 'X';
 		btn.className = 'btn btn-danger';
 		btn.id = 'delBtn';
 		btn.style.marginLeft = '12px';
-		btn.addEventListener('click', async function delObj(event) {
+		btn.addEventListener('click', async function delObj() {
 			try {
-				const obj = await fetch('/finance/' + e._id, { method: 'Delete' });
+				await fetch('/finance/' + e._id, { method: 'Delete' });
 			} catch (e) {
 				console.log('did not go thru');
 			}
@@ -90,13 +89,48 @@ function makeTable(jsondata) {
 		let td2 = document.createElement('td');
 		td2.appendChild(btn);
 		tr.appendChild(td2);
+
+		// add row to table
 		tbl.appendChild(tr);
 	});
 }
 
+function addDateToEntryList(e) {
+	let date = new Date(e); //.toUTCString();
+	//
+	let inpDate = document.createElement('input');
+	inpDate.setAttribute('type', 'date');
+	inpDate.value =
+		date.getFullYear().toString() +
+		'-' +
+		(date.getMonth() + 1).toString().padStart(2, 0) +
+		'-' +
+		date.getDate().toString().padStart(2, 0);
+	//
+	let td = document.createElement('td');
+	td.appendChild(inpDate);
+	return td;
+}
+
+function getDateDifference() {
+	const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+	// a and b are javascript Date objects
+	// Discard the time and time-zone information.
+	const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+	const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+	return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+
+	// test it
+	/*
+	const a = new Date('2017-01-01'),
+    b = new Date('2017-07-25'),
+    difference = dateDiffInDays(a, b);
+    */
+}
+
 window.onload = function () {
-	// document.getElementById("EntriesDiv").style.display = 'none';
 	showExistingEntries();
-	// document.getElementById("AddDiv").style.display = 'none';
 	showAddForm();
 };
