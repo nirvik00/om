@@ -145,6 +145,7 @@ function testDownload(tbl, objArr, netBalance) {
 	let btn = document.createElement('button');
 	btn.innerHTML = 'Download';
 	btn.className = 'btn btn-standard';
+	btn.style.width = '100%';
 	btn.onclick = function () {
 		var content = s;
 		var filename = 'accounts.csv';

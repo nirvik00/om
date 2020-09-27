@@ -1,5 +1,5 @@
 /// initialize
-let showEntriesDiv = false;
+let showEntriesDiv = true;
 let showAddDiv = false;
 let showCostCompDiv = false;
 

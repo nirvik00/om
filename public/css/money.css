@@ -66,3 +66,14 @@ input {
 	box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 }
+
+.block {
+	display: block;
+	width: 100%;
+	border: none;
+	background-color: #4caf50;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+}
