@@ -199,7 +199,7 @@ function getDateVal2(e) {
 	let value =
 		(date.getMonth() + 1).toString().padStart(2, 0) +
 		'-' +
-		(date.getDate() + 1).toString().padStart(2, 0) +
+		date.getDate().toString().padStart(2, 0) +
 		'-' +
 		date.getFullYear().toString();
 	//
