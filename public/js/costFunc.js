@@ -213,16 +213,16 @@ function closeEditDiv() {
 
 function downloadDBEntries() {
 	let s =
-		'purpose, source, name, money type, value, income date, spend date, entry date\n';
+		'purpose, source, name, value, money type, income date, spend date, entry date\n';
 	jsonData.forEach((data) => {
 		let a = data.purpose;
 		let b = data.source;
 		let c = data.name;
 		let d = data.val;
 		let e = data.moneyType;
-		let f = getDateVal2(data.date);
-		let g = getDateVal2(data.incomeDate);
-		let h = getDateVal2(data.spendDate);
+		let f = getDateVal2(data.incomeDate);
+		let g = getDateVal2(data.spendDate);
+		let h = getDateVal2(data.date);
 		s +=
 			a +
 			',' +
