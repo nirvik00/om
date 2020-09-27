@@ -1,6 +1,24 @@
-let showEntriesDiv = true;
+/// initialize
+let showEntriesDiv = false;
 let showAddDiv = false;
+let showCostCompDiv = false;
 
+if (jsonData.length > 0) {
+	makeTable(jsonData);
+	document.getElementById('sys').innerHTML =
+		'System message: DATA - ' + jsonData.length;
+} else {
+	document.getElementById('sys').innerHTML = 'System message: NO DATA';
+}
+
+/// initialize
+window.onload = function () {
+	showExistingEntries();
+	showAddForm();
+	showComputeForm();
+};
+
+/// show list of entries
 function toggleshowExistingEntries() {
 	showEntriesDiv = !showEntriesDiv;
 	showExistingEntries();
@@ -18,6 +36,7 @@ function showExistingEntries() {
 	}
 }
 
+/// add form
 function toggleShowAddForm() {
 	showAddDiv = !showAddDiv;
 	showAddForm();
@@ -31,15 +50,7 @@ function showAddForm() {
 	}
 }
 
-if (jsonData.length > 0) {
-	makeTable(jsonData);
-	document.getElementById('sys').innerHTML =
-		'System message: DATA - ' + jsonData.length;
-} else {
-	document.getElementById('sys').innerHTML = 'System message: NO DATA';
-}
-
-// list all entries
+/// list all entries
 function makeTable(jsondata) {
 	let tbl = document.getElementById('tableId');
 	let rowId = 0;
@@ -62,14 +73,12 @@ function makeTable(jsondata) {
 		});
 
 		//handle date
-		let tdEntryDate = addDateToEntryList(e.date);
-		tr.appendChild(tdEntryDate);
-
 		let tdIncDate = addDateToEntryList(e.incomeDate);
 		tr.appendChild(tdIncDate);
-
 		let tdExpDate = addDateToEntryList(e.spendDate);
 		tr.appendChild(tdExpDate);
+		let tdEntryDate = addDateToEntryList(e.date);
+		tr.appendChild(tdEntryDate);
 
 		// delete funcionality
 		let btn = document.createElement('button');
@@ -94,7 +103,8 @@ function makeTable(jsondata) {
 		tbl.appendChild(tr);
 	});
 }
-
+33;
+/// add form funcationality
 function addDateToEntryList(e) {
 	let date = new Date(e); //.toUTCString();
 	//
@@ -111,26 +121,3 @@ function addDateToEntryList(e) {
 	td.appendChild(inpDate);
 	return td;
 }
-
-function getDateDifference() {
-	const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-	// a and b are javascript Date objects
-	// Discard the time and time-zone information.
-	const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-	const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-	return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-
-	// test it
-	/*
-	const a = new Date('2017-01-01'),
-    b = new Date('2017-07-25'),
-    difference = dateDiffInDays(a, b);
-    */
-}
-
-window.onload = function () {
-	showExistingEntries();
-	showAddForm();
-};

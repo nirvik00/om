@@ -23,7 +23,7 @@
 
 <div id="EntriesDiv">
     <br>
-    <table id="tableId">
+    <table id="tableId" class="nstbl">
         <tr>
             <th>
                 <p>Sl</p>
@@ -72,7 +72,7 @@
 <div id="AddDiv">
     <form action="/finance/add" method="post">
         <br>
-        <table id="AddEntryTable">
+        <table id="AddEntryTable" class="nstbl">
             <tr>
                 <td>Purpose</td>
                 <td>
@@ -130,4 +130,41 @@
     </form>
 </div>
 
+<br>
+<br>
+<button class="btn btn-standard" style="font-size:15px; width:50%" onclick="toggleShowComputeForm();">
+    <span style="font-size:10px">
+        (toggle show / hide)
+    </span> &nbsp; &nbsp;
+    Compute finances at date
+</button>
+
+<div id="costComputationDiv">
+    <br>
+    <br>
+    <table id="computeTbl" class="nstbl">
+        <tr>
+            <td>Income Date</td>
+            <td>
+                <input type='date' id='queryDate' />
+            </td>
+        </tr>
+        <tr>
+            <td>Compute</td>
+            <td>
+                <button class="btn btn-standard" onclick="computeAtDate();" style="font-size:15px; width:100%">
+                    Compute balance
+                </button>
+            </td>
+        </tr>
+    </table>
+    <table id="solutionTable" class="nstbl">
+    </table>
+    <table id="downloadTable" class="nstbl">
+    </table>
+</div>
+
+
 <script src="/public/js/costFunc.js"></script>
+<script src="/public/js/FileSaver.min.js"></script>
+<script src="/public/js/costComputation.js"></script>
