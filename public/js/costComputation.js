@@ -206,8 +206,15 @@ function getRecurringAmt(a, b, val) {
 	let utcB = Date.UTC(B.getFullYear(), B.getMonth(), B.getDate());
 	const msPerDay = 1000 * 60 * 60 * 24;
 	let daysAB = Math.floor((utcB - utcA) / msPerDay);
+	if (daysAB < 1) {
+		daysAB = 1;
+	}
 	let cycles = 30; // days in each cycle
 	let numCycles = Math.floor(daysAB / cycles);
+	if (numCycles < 1) {
+		numCycles = 1;
+	}
 	let res = val * numCycles;
+	console.log(cycles, numCycles, res);
 	return { res, numCycles };
 }

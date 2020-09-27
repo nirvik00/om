@@ -3,8 +3,14 @@
     let data = '{{{data}}}';
     let decode = decodeURIComponent(data);
     let jsonData = JSON.parse(decode);
+
+    let note = '{{{note}}}';
+    let decodeNote = decodeURIComponent(note);
+    let noteData = JSON.parse(decodeNote);
     console.clear();
     console.log(jsonData);
+    console.log(noteData);
+
 </script>
 
 <br>
@@ -13,6 +19,82 @@
 <p id="sys"> System message</p>
 <br>
 <br>
+
+<div id="editFloatingDiv" style="display:none" class="floating">
+    <form id="editForm" action="/" method="post" class=" nstbl" name="editFormX">
+        <input type="hidden" name="_method" value="put">
+        <table>
+            <tr>
+                <td>Purpose</td>
+                <td>
+                    <input id="editPurpose" type="text" name="purpose" />
+                </td>
+            </tr>
+            <tr>
+                <td>Source</td>
+                <td>
+                    <input id="editSource" ype="text" name="source" />
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input id="editName" type="text" name="name" />
+                </td>
+            </tr>
+            <tr>
+                <td>Value</td>
+                <td>
+                    <input id="editVal" type="number" name="val" />
+                </td>
+            </tr>
+            <tr>
+                <td>Type of Input</td>
+                <td>
+                    <select name="moneyType" id="editMoneyType" class="dropdown">
+                        <option value='income'>income (monthly recurring income) </option>
+                        <option value='gift'>gift (one-time income) </option>
+                        <option value='debt'>debt (monthly recurring expenditure) </option>
+                        <option value='expense'>expense (one-time expenditure) </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Income Date</td>
+                <td>
+                    <input id="editIncomeDate" type="date" name="incomeDate" />
+                </td>
+            </tr>
+            <tr>
+                <td>Spend Date</td>
+                <td>
+                    <input id="editSpendDate" type="date" name="spendDate" />
+                </td>
+            </tr>
+            <tr>
+                <td>Entry Date</td>
+                <td>
+                    <input id="editDate" type="date" name="date" />
+                </td>
+            </tr>
+            <tr>
+                <td>Submit to DB</td>
+                <td>
+                    <button class="btn btn-warning" type="Submit">Submit Values</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table class="nstbl">
+        <tr>
+            <td>Close the window</td>
+            <td>
+                <button class="btn btn-primary" onclick="closeEditDiv();">Close Window</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
 
 <button class="btn btn-standard" style="font-size:15px; width:100%" onclick="toggleshowExistingEntries()">
     <span style="font-size:10px">
@@ -53,6 +135,9 @@
                 <p>Entry Date</p>
             </th>
             <th>
+                <p>Update</p>
+            </th>
+            <th>
                 <p>Delete</p>
             </th>
         </tr>
@@ -72,7 +157,7 @@
 <div id="AddDiv">
     <form action="/finance/add" method="post">
         <br>
-        <table id="AddEntryTable" class="nstbl">
+        <table id="AddEntryTable" class="nstbl2">
             <tr>
                 <td>Purpose</td>
                 <td>
@@ -142,7 +227,7 @@
 <div id="costComputationDiv">
     <br>
     <br>
-    <table id="computeTbl" class="nstbl">
+    <table id="computeTbl" class="nstbl2">
         <tr>
             <td>Income Date</td>
             <td>
@@ -158,13 +243,76 @@
             </td>
         </tr>
     </table>
-    <table id="solutionTable" class="nstbl">
+    <table id="solutionTable" class="nstbl2">
     </table>
-    <table id="downloadTable" class="nstbl">
+    <table id="downloadTable" class="nstbl2">
     </table>
 </div>
-
-
+<br>
+<br>
+<button class="btn btn-standard" style="font-size:15px; width:100%" onclick="toggleNotesForm();">
+    <span style="font-size:10px">
+        (toggle show / hide)
+    </span> &nbsp; &nbsp;
+    Notes / Description
+</button>
+<br><br>
+<div class="container">
+    <div id="notesDiv">
+        <table id="notesTbl" class='nstbl' style="text-align:center; width:50%">
+            <tr>
+                <th id="wideCell">Content</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </table>
+        <br>
+        <hr>
+        <br>
+        <form action="/notes" method="post">
+            <div class='row'>
+                <div class='col md-6'>
+                    <textarea name="content" wrap="off" cols="30" rows="5" required></textarea>
+                </div>
+                <div class='col md-6'>
+                    <button type="submit" class="block"> Add Note </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br><br>
+<div id="editFloatingNoteDiv" style="display:none" class="floating">
+    <form id="editNoteForm" class="nstbl" action="" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <table class='nstbl'>
+            <tr>
+                <td>
+                    <p>Content</p>
+                </td>
+                <td>
+                    <input id="editContent" type="text" name="content" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Submit to DB</td>
+                <td>
+                    <button class="btn btn-warning" type="Submit">Submit Values</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Close the window</td>
+                <td>
+                    <button class="btn btn-primary" type="Submit" onclick="closeNoteEditForm();">Close Window</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<br>
+<br>
+<br>
 <script src="/public/js/costFunc.js"></script>
 <script src="/public/js/FileSaver.min.js"></script>
 <script src="/public/js/costComputation.js"></script>
+<script src="/public/js/notesFunc.js"></script>

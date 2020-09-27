@@ -40,6 +40,8 @@ app.use(methodOverride('_method'));
 
 // wedding routes
 app.use('/', require('./routes/weddingRoute'));
+app.use('/', require('./routes/financeRoute'));
+app.use('/', require('./routes/noteRoute'));
 
 var port = process.env.PORT || 5500;
 app.listen(port, () => {
