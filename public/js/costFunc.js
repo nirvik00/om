@@ -210,3 +210,46 @@ function getDateVal2(e) {
 function closeEditDiv() {
 	document.getElementById('editFloatingDiv').style.display = 'none';
 }
+
+function downloadDBEntries() {
+	let s =
+		'purpose, source, name, money type, value, income date, spend date, entry date\n';
+	jsonData.forEach((data) => {
+		let a = data.purpose;
+		let b = data.source;
+		let c = data.name;
+		let d = data.val;
+		let e = data.moneyType;
+		let f = getDateVal2(data.date);
+		let g = getDateVal2(data.incomeDate);
+		let h = getDateVal2(data.spendDate);
+		s +=
+			a +
+			',' +
+			b +
+			',' +
+			c +
+			',' +
+			d +
+			',' +
+			e +
+			',' +
+			f +
+			',' +
+			g +
+			',' +
+			h +
+			'\n';
+	});
+
+	var content = s;
+
+	//console.log('download-->\n', content);
+
+	var filename = 'accounts.csv';
+	var blob = new Blob([content], {
+		type: 'text/plain;charset=utf-8',
+	});
+
+	saveAs(blob, filename);
+}
