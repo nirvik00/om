@@ -67,11 +67,30 @@ function addNotestoPage() {
 function updateEditNoteVals(note) {
 	showNotesDiv = true;
 	document.getElementById('editFloatingNoteDiv').style.display = 'block';
-	let form = document.getElementById('editNoteForm');
-	form.action = '/notes/' + note._id + '?_method=PUT';
-	document.getElementById('content').value = note.content;
+	placeDiv(x_pos, y_pos);
+	//
+	document.getElementById('editContent').value = note.content;
+	document.editNoteFormX.action = '/notes/' + note._id + '?_method=PUT';
+	//
+	//
+	var viewportOffset = document
+		.getElementById('notesTbl')
+		.getBoundingClientRect();
+	// these are relative to the viewport, i.e. the window
+	var top = viewportOffset.top;
+	var left = viewportOffset.left;
+	placeDiv(left, top);
 }
 
 function closeNoteEditForm() {
 	document.getElementById('editFloatingNoteDiv').style.display = 'none';
+}
+
+function placeDiv(x_pos, y_pos) {
+	var d = document.getElementById('editFloatingNoteDiv');
+	d.style.position = 'absolute';
+	d.style.left = x_pos + 'px';
+	d.style.top = y_pos + 'px';
+	console.log(x_pos, y_pos, d.id);
+	return d;
 }
