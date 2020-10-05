@@ -15,6 +15,7 @@
 	font-size: 12px;
 	text-align: center;
 }
+
 /*
 .nstbl tr:nth-child(even) {
 	background-color: #f2f2f2;
@@ -100,17 +101,15 @@ input {
 	z-index: 10;
 }
 
-.floating2 {
-	border-width: 1px;
-	top: 15%;
-	left: 20%;
-	padding: 10px;
-	background-color: rgb(0, 0, 0);
-	overflow: auto;
-	display: none;
-	color: white;
-	opacity: 0.75;
-	z-index: 10;
+.block {
+	display: block;
+	width: 100%;
+	border: none;
+	background-color: #f1f1f1;
+	padding: 14px 28px;
+	font-size: 12px;
+	cursor: pointer;
+	text-align: center;
 }
 
 textarea {

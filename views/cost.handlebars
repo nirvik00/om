@@ -165,7 +165,7 @@
     Add Entry to Database
 </button>
 
-
+<!-- add financial entry -->
 <div id="AddDiv">
     <form action="/finance/add" method="post">
         <br>
@@ -226,7 +226,7 @@
         </table>
     </form>
 </div>
-
+<!-- compute finances at date -->
 <br>
 <br>
 <button class="btn btn-standard" style="font-size:15px; width:100%" onclick="toggleShowComputeForm();">
@@ -260,8 +260,10 @@
     <table id="downloadTable" class="nstbl2">
     </table>
 </div>
-<br>
-<br>
+
+<br><br>
+
+<!-- write the notes -->
 <button class="btn btn-standard" style="font-size:15px; width:100%" onclick="toggleNotesForm();">
     <span style="font-size:10px">
         (toggle show / hide)
@@ -294,6 +296,8 @@
     </div>
 </div>
 <br><br>
+
+<!-- floating div to update the notes -->
 <div id="editFloatingNoteDiv" style="display:none" class="floating2">
     <form id="editNoteForm" class="nstbl" action="/" method="post" name="editNoteFormX">
         <input type="hidden" name="_method" value="PUT">
@@ -325,6 +329,7 @@
 <br>
 <br>
 <script src="/public/js/costFunc.js"></script>
-<script src="/public/js/FileSaver.min.js"></script>
 <script src="/public/js/costComputation.js"></script>
 <script src="/public/js/notesFunc.js"></script>
+<script src="/public/js/libs/jquery.js"></script>
+<script src="/public/js/libs/FileSaver.min.js"></script>

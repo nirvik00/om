@@ -1,6 +1,8 @@
-/// add form
+//
+// add form
 addNotestoPage();
-///
+//
+//
 function showNotesForm() {
 	if (showNotesDiv) {
 		document.getElementById('notesDiv').style.display = 'block';
@@ -8,33 +10,45 @@ function showNotesForm() {
 		document.getElementById('notesDiv').style.display = 'none';
 	}
 }
-
+//
+//
 function toggleNotesForm() {
 	showNotesDiv = !showNotesDiv;
 	showNotesForm();
 }
-
+//
+//
 function addNotestoPage() {
 	let notes = [...noteData];
 	let tbl = document.getElementById('notesTbl');
-
+	while (tbl.hasChildNodes()) {
+		tbl.removeChild(tbl.firstChild);
+	}
+	let rowId = 0;
 	notes.forEach((note) => {
+		rowId++;
+		console.log(note);
 		let tr = document.createElement('tr');
+		let td_id = document.createElement('td');
+		td_id.innerHTML = note._id;
+		td_id.className = 'note-id';
+		td_id.style.display = 'none';
+		tr.appendChild(td_id);
+
 		let td = document.createElement('td');
-		td.innerHTML = note.content;
+		let inp = document.createElement('input');
+		inp.id = 'note' + rowId;
+		inp.value = note.content;
+		inp.className = 'notes-content';
+		td.appendChild(inp);
 		tr.appendChild(td);
 		//
 		// edit funcionality
 		//
-
 		let btnEdit = document.createElement('button');
 		btnEdit.innerHTML = 'O';
-		btnEdit.className = 'btn btn-warning';
-		btnEdit.id = 'editBtn2';
+		btnEdit.className = 'btn btn-warning editBtn-Note';
 		btnEdit.style.marginLeft = '12px';
-		btnEdit.addEventListener('click', function () {
-			updateEditNoteVals(note);
-		});
 		let tdEdit = document.createElement('td');
 		tdEdit.appendChild(btnEdit);
 		tr.appendChild(tdEdit);
@@ -44,17 +58,8 @@ function addNotestoPage() {
 		//
 		let btn = document.createElement('button');
 		btn.innerHTML = 'X';
-		btn.className = 'btn btn-danger';
-		btn.id = 'delBtn';
+		btn.className = 'btn btn-danger delete-button';
 		btn.style.marginLeft = '12px';
-		btn.addEventListener('click', async function delObj() {
-			try {
-				await fetch('/notes/' + note._id, { method: 'Delete' });
-			} catch (e) {
-				console.log('did not go thru');
-			}
-			window.location.reload(true);
-		});
 		let td2 = document.createElement('td');
 		td2.appendChild(btn);
 		tr.appendChild(td2);
@@ -63,34 +68,46 @@ function addNotestoPage() {
 		tbl.appendChild(tr);
 	});
 }
+//
+//
 
-function updateEditNoteVals(note) {
-	showNotesDiv = true;
-	document.getElementById('editFloatingNoteDiv').style.display = 'block';
-	placeDiv(x_pos, y_pos);
-	//
-	document.getElementById('editContent').value = note.content;
-	document.editNoteFormX.action = '/notes/' + note._id + '?_method=PUT';
-	//
-	//
-	var viewportOffset = document
-		.getElementById('notesTbl')
-		.getBoundingClientRect();
-	// these are relative to the viewport, i.e. the window
-	var top = viewportOffset.top;
-	var left = viewportOffset.left;
-	placeDiv(left, top);
-}
+$('table').on('click', '.editBtn-Note', function () {
+	var rowEl = $(this).closest('tr');
+	var id = rowEl.find('.note-id').text();
+	var newContent = rowEl.find('.notes-content').val();
+	console.log('id', id, newContent);
+	$.ajax({
+		url: '/notes/' + id,
+		method: 'PUT',
+		contentType: 'application/JSON',
+		data: JSON.stringify({ content: newContent, e: 'abcde' }),
+		success: function () {
+			console.log('success find');
+		},
+	});
+});
 
-function closeNoteEditForm() {
-	document.getElementById('editFloatingNoteDiv').style.display = 'none';
-}
-
-function placeDiv(x_pos, y_pos) {
-	var d = document.getElementById('editFloatingNoteDiv');
-	d.style.position = 'absolute';
-	d.style.left = x_pos + 'px';
-	d.style.top = y_pos + 'px';
-	console.log(x_pos, y_pos, d.id);
-	return d;
-}
+$('table').on('click', '.delete-button', function () {
+	var rowEl = $(this).closest('tr');
+	var id = rowEl.find('.note-id').text();
+	console.log('id', id);
+	$.ajax({
+		url: '/notes/' + id,
+		method: 'DELETE',
+		contentType: 'application/JSON',
+		success: function () {
+			console.log('success delete');
+			for (let i = 0; i < noteData.length; i++) {
+				if (noteData.length > 1) {
+					if (noteData[i]._id === id) {
+						noteData.splice(i, 1);
+						break;
+					}
+				} else {
+					noteData.pop();
+				}
+			}
+			addNotestoPage();
+		},
+	});
+});
