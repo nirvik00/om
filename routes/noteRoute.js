@@ -8,6 +8,7 @@ router.use(express.json());
 ///  note schema- db model routes
 //
 // const mongoose = require('mongoose');
+//
 const Note = require('../models/Note');
 //
 // POST request from add
@@ -19,10 +20,9 @@ router.post('/notes', async (req, res) => {
 	});
 	try {
 		await c.save();
-		res.redirect('/finance');
+		res.send(c);
 	} catch (e) {
-		res.redirect('/finance');
-		console.log(e);
+		res.send('error in post submitssion');
 	}
 });
 //

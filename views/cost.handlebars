@@ -283,48 +283,20 @@
         <br>
         <hr>
         <br>
-        <form action="/notes" method="post">
+        <!--<form action="/notes" method="post" id="create-form">-->
+        <form id="create-form">
             <div class='row'>
                 <div class='col md-6'>
-                    <textarea name="content" wrap="off" cols="30" rows="5" required></textarea>
+                    <textarea name="content" wrap="off" cols="30" rows="5" id="create-input" required></textarea>
                 </div>
                 <div class='col md-6'>
-                    <button type="submit" class="block"> Add Note </button>
+                    <button type="submit" class="block" id="create-button"> Add Note </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <br><br>
-
-<!-- floating div to update the notes -->
-<div id="editFloatingNoteDiv" style="display:none" class="floating2">
-    <form id="editNoteForm" class="nstbl" action="/" method="post" name="editNoteFormX">
-        <input type="hidden" name="_method" value="PUT">
-        <table class='nstbl'>
-            <tr>
-                <td>
-                    <p>Content</p>
-                </td>
-                <td>
-                    <input id="editContent" type="text" name="content" required />
-                </td>
-            </tr>
-            <tr>
-                <td>Submit to DB</td>
-                <td>
-                    <button class="btn btn-warning" type="Submit">Submit Values</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Close the window</td>
-                <td>
-                    <button class="btn btn-primary" type="Submit" onclick="closeNoteEditForm();">Close Window</button>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
 <br>
 <br>
 <br>
