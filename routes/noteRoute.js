@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const methodOverride = require('method-override');
-//
-// router.use(methodOverride('_method'));
 router.use(express.json());
 //
-///  note schema- db model routes
-//
-// const mongoose = require('mongoose');
 //
 const Note = require('../models/Note');
 //

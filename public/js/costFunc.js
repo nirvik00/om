@@ -68,15 +68,18 @@ function makeTable(jsondata) {
 		tr.class = 'row' + rowId;
 
 		let form = document.createElement('form');
-		let fields = [e.purpose, e.source, e.name, e.val, e.moneyType];
+		let fields = [e.purpose, e.source, e.name, e.val];
 		let fieldName = ['purpose', 'source', 'name', 'val', 'moneyType'];
 		fields.forEach((f) => {
 			let td = document.createElement('td');
-			//let input = document.createElement('input');
-			td.innerHTML = f;
-			//td.appendChild(input);
+			let input = document.createElement('input');
+			input.value = f;
+			td.appendChild(input);
 			tr.appendChild(td);
 		});
+
+		// moneytype - dropdown selector
+		let valMoneyType = e.moneyType;
 
 		//
 		// handle date
